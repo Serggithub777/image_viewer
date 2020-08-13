@@ -1,16 +1,37 @@
 package com.example.imageviewer.interface_adapters.adapters;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.imageviewer.R;
+import com.example.imageviewer.frameworks.network.GlideLoader;
+import com.example.imageviewer.interface_adapters.presenters.InterfRecyclerMain;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
+    private static final String TAG = "MainAdapter";
+
+    private InterfRecyclerMain interfRecyclerMain;
+    private GlideLoader glideLoader;
+
+    public MainAdapter(InterfRecyclerMain interfRecyclerMain, Context context) {
+        this.interfRecyclerMain = interfRecyclerMain;
+        glideLoader = new GlideLoader();
+    }
+
     @NonNull
     @Override
-    public MainAdapter.MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public MainAdapter.MainViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_main, viewGroup, false);
+        return new MainViewHolder (view);
     }
 
     @Override
@@ -23,9 +44,24 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         return 0;
     }
 
-    public class MainViewHolder extends RecyclerView.ViewHolder {
+    public class MainViewHolder extends RecyclerView.ViewHolder implements InterfViewHolder {
+        private int position = 0;
+        @BindView(R.id.image_view_item)
+        ImageView imageView;
+
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public int getPos() {
+            return position;
+        }
+
+        @Override
+        public void setImage(String url) {
+            glideLoader.loadImage(url, imageView);
         }
     }
 }
