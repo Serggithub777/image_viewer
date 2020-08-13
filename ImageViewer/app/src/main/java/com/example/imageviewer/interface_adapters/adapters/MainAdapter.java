@@ -1,6 +1,7 @@
 package com.example.imageviewer.interface_adapters.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.imageviewer.interface_adapters.presenters.InterfRecyclerMain;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
     private static final String TAG = "MainAdapter";
@@ -53,6 +55,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.image_view_item)
+        public void onClickImageView() {
+              int positopn = getAdapterPosition();
+            Log.d(TAG, "Clicked position: " + positopn);
         }
 
         @Override
