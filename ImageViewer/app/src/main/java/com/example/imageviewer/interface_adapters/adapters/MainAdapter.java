@@ -24,7 +24,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     public MainAdapter(InterfRecyclerMain interfRecyclerMain, Context context) {
         this.interfRecyclerMain = interfRecyclerMain;
-        glideLoader = new GlideLoader();
+        glideLoader = new GlideLoader(context);
     }
 
     @NonNull
@@ -35,13 +35,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MainAdapter.MainViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull MainAdapter.MainViewHolder mainViewHolder, int position) {
+        mainViewHolder.position = position;
+        interfRecyclerMain.bindView(mainViewHolder);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return interfRecyclerMain.getItemCount();
     }
 
     public class MainViewHolder extends RecyclerView.ViewHolder implements InterfViewHolder {
