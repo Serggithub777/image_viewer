@@ -24,7 +24,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     private InterfRecyclerMain interfRecyclerMain;
     private GlideLoader glideLoader;
 
-    public MainAdapter(InterfRecyclerMain interfRecyclerMain, Context context) {
+    public MainAdapter(Context context, InterfRecyclerMain interfRecyclerMain) {
         this.interfRecyclerMain = interfRecyclerMain;
         glideLoader = new GlideLoader(context);
     }
