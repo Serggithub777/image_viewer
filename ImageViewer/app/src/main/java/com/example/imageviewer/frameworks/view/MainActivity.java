@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.imageviewer.R;
 import com.example.imageviewer.interface_adapters.adapters.MainAdapter;
@@ -12,6 +14,7 @@ import com.example.imageviewer.interface_adapters.presenters.MainPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
@@ -50,6 +53,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         mainAdapter = new MainAdapter(this, presenter.getRecyclerMain());
         recyclerView.setAdapter(mainAdapter);
     }
+
 
     @Override
     public void updateRecyclerView() {
