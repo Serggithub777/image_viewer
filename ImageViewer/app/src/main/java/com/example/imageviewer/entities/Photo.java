@@ -14,4 +14,8 @@ public class Photo {
     @SerializedName("hits")
     public List<Hit> hits;
 
+    public List<Hit> getHits() {
+        return hits;
+    }
+
 }
