@@ -1,8 +1,8 @@
 package com.example.imageviewer.frameworks.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -46,6 +46,7 @@ public class DetailActivity extends MvpAppCompatActivity implements InterfDetail
 
     @Override
     public void setImage(String url) {
-       glideLoader.loadImage(url,imageViewDetail);
+        Log.d(TAG, "setImage" + url);
+        glideLoader.loadImage(url,imageViewDetail);
     }
 }

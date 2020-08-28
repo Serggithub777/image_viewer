@@ -2,16 +2,16 @@ package com.example.imageviewer.interface_adapters.presenters;
 
 import android.util.Log;
 
+import com.example.imageviewer.App;
 import com.example.imageviewer.entities.Hit;
 import com.example.imageviewer.entities.Photo;
+import com.example.imageviewer.frameworks.data_base.HitDao;
 import com.example.imageviewer.frameworks.network.api.ApiHelper;
 import com.example.imageviewer.frameworks.view.InterfDetailActivity;
 
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
 
@@ -23,20 +23,26 @@ public class DetailPresenter extends MvpPresenter<InterfDetailActivity> {
    private List<Hit> hitList = photo.getHits();
    private String url;
    private ApiHelper apiHelper;
+   private HitDao hitDao;
+
+    public DetailPresenter() {
+        hitDao = App.getAppDatabase().hitDao();
+    }
 
     public void getUrlByPosition(int position) {
-        apiHelper = new ApiHelper();
-        Observable<Photo> single = apiHelper.requestServer();
+       url = getURLofHit(position);
+        getViewState().setImage(url);
+    }
 
-        Disposable disposable = single.observeOn(AndroidSchedulers.mainThread()).subscribe(photos -> {
-            hitList = photos.hits;
-            url = hitList.get(position).webformatURL;
-            Log.d(TAG, "DetailPresenter: " + url);
-            getViewState().setImage(url);
+    private String getURLofHit(int position) {
+        Disposable disposables = hitDao.getHitById(position).subscribeOn(Schedulers.io())
+                .subscribe(hits->{
+                    url = hits.get(0).webformatURL;
 
-        }, throwable -> {
-            Log.e(TAG, "onError " + throwable);
-        });
-
+                    Log.d(TAG, "getUrlByPosition: " + url);
+                 }, throwable -> {
+                    Log.d(TAG, "getUrlByPosition: " + throwable);
+                });
+        return url;
     }
 }
